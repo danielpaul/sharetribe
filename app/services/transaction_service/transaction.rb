@@ -108,6 +108,9 @@ module TransactionService::Transaction
     tx_process_settings = set_adapter.tx_process_settings(opts_tx)
 
     tx = TxStore.create(opts_tx.merge(tx_process_settings))
+    if tx.errors.any?
+      return Result::Error.new('', tx.errors)
+    end
 
     tx_process = tx_process(tx[:payment_process])
     gateway_adapter = gateway_adapter(tx[:payment_gateway])
