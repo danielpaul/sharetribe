@@ -5,12 +5,15 @@ module TransactionService::Store::Transaction
   module_function
 
   def create(tx_data)
-    tx_model = TransactionModel.new(tx_data.except(:content, :booking_fields, :starting_page))
+    TransactionModel.transaction do
+      tx_model = TransactionModel.new(tx_data.except(:content, :booking_fields, :starting_page))
 
-    build_conversation(tx_model, tx_data)
-    build_booking(tx_model, tx_data)
-    tx_model.save!
-    tx_model
+      build_conversation(tx_model, tx_data)
+      build_booking(tx_model, tx_data)
+      tx_model.booking.direct_validation
+      tx_model.save!
+      tx_model
+    end
   end
 
   def add_message(community_id:, transaction_id:, sender_id:, message:)

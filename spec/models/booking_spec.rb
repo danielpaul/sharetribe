@@ -54,16 +54,23 @@ describe Listing, type: :model do
       booking1
       tx = Transaction.new(community: community, listing: listing1)
       booking = Booking.new(tx: tx, start_on: '2050-11-28', end_on: '2050-11-29')
+      booking.direct_validation
       expect(booking.valid?).to eq true
       booking = Booking.new(tx: tx, start_on: '2050-11-20', end_on: '2050-11-23')
+      booking.direct_validation
+      byebug
       expect(booking.valid?).to eq false
       booking = Booking.new(tx: tx, start_on: '2050-11-21', end_on: '2050-11-29')
+      booking.direct_validation
       expect(booking.valid?).to eq false
       booking = Booking.new(tx: tx, start_on: '2050-11-19', end_on: '2050-11-21')
+      booking.direct_validation
       expect(booking.valid?).to eq false
       booking = Booking.new(tx: tx, start_on: '2050-11-23', end_on: '2050-11-29')
+      booking.direct_validation
       expect(booking.valid?).to eq true
       booking = Booking.new(tx: tx, start_on: '2050-11-18', end_on: '2050-11-20')
+      booking.direct_validation
       expect(booking.valid?).to eq true
     end
 
@@ -71,16 +78,22 @@ describe Listing, type: :model do
       booking2
       tx = Transaction.new(community: community, listing: listing2)
       booking = Booking.new(tx: tx, start_time: '2050-11-28 09:00', end_time: '2050-11-28 11:00', per_hour: true)
+      booking.direct_validation
       expect(booking.valid?).to eq true
       booking = Booking.new(tx: tx, start_time: '2050-11-28 12:00', end_time: '2050-11-28 15:00', per_hour: true)
+      booking.direct_validation
       expect(booking.valid?).to eq false
       booking = Booking.new(tx: tx, start_time: '2050-11-28 14:00', end_time: '2050-11-28 16:00', per_hour: true)
+      booking.direct_validation
       expect(booking.valid?).to eq false
       booking = Booking.new(tx: tx, start_time: '2050-11-28 11:00', end_time: '2050-11-28 13:00', per_hour: true)
+      booking.direct_validation
       expect(booking.valid?).to eq false
       booking = Booking.new(tx: tx, start_time: '2050-11-28 11:00', end_time: '2050-11-28 12:00', per_hour: true)
+      booking.direct_validation
       expect(booking.valid?).to eq true
       booking = Booking.new(tx: tx, start_time: '2050-11-28 15:00', end_time: '2050-11-28 16:00', per_hour: true)
+      booking.direct_validation
       expect(booking.valid?).to eq true
     end
   end
