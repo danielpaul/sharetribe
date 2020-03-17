@@ -640,6 +640,6 @@ class ApplicationController < ActionController::Base
   helper_method :show_location?
 
   def show_location?
-    @current_community.show_location?
+    @current_community.show_location? || @current_community.fuzzy_location?
   end
 end
