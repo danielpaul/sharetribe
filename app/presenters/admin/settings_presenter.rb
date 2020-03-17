@@ -85,6 +85,6 @@ class Admin::SettingsPresenter
   end
 
   def show_location?
-    @show_location ||= community.show_location?
+    @show_location ||= (community.show_location? || community.fuzzy_location?)
   end
 end
